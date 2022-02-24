@@ -15,7 +15,7 @@ module.exports.profile = function(req,res){
             return res.redirect('/users/sign-in');
         });
     }else{
-        return res.redirect('/users/sign_in');
+        return res.redirect('/users/sign-in');
     }
 };
 
@@ -36,6 +36,16 @@ module.exports.signup = function(req,res){
         title:"Codeial | sign up here"
     });
 };
+
+//render sign out page
+module.exports.signout = function(req,res){
+    //its cookie while changing the cookie and cookie in other places 
+    res.cookie('user_id',55);
+    return res.render('user_sign_in',{
+        title:"user | sign in here"
+    });
+};
+
 
 //get the sign up data
 module.exports.create = function(req,res){
@@ -79,12 +89,6 @@ module.exports.createSession = function(req,res){
             return res.redirect('back');
         }
     });
-    
-    
-    //handle password which dont match
-
-    //handle session creation
-
 
 
 };
