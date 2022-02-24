@@ -12,7 +12,8 @@ console.log('router loaded and working fine')
 
 router.get('/',homeController.home)
 router.use('/users',require('./users'));
-// router.use()
+// for any further routes, access from here
+// router.use('/routerName', require('./routerfile));
 
 
 // exporting the router
