@@ -37,6 +37,16 @@ module.exports.signup = function(req,res){
     });
 };
 
+//render sign out page
+module.exports.signout = function(req,res){
+    //its cookie while changing the cookie and cookie in other places 
+    res.cookie('user_id',55);
+    return res.render('user_sign_in',{
+        title:"user | sign in here"
+    });
+};
+
+
 //get the sign up data
 module.exports.create = function(req,res){
     if(req.body.password!=req.body.confirm_password){
