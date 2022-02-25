@@ -1,3 +1,4 @@
+const { redirect } = require("express/lib/response");
 const User = require("../models/user");
 
 
@@ -14,6 +15,11 @@ module.exports.post = function(req,res){
 
 //render sign in page
 module.exports.signin = function(req,res){
+    // if already signed in then redirect to the profile page
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_in',{
         title:"user | sign in here"
     });
@@ -21,6 +27,11 @@ module.exports.signin = function(req,res){
 
 //render sign up page
 module.exports.signup = function(req,res){
+    // if already signed in then redirect to the profile page
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_up',{
         title:"Codeial | sign up here"
     });
@@ -44,7 +55,14 @@ module.exports.create = function(req,res){
         }
     });
 };
+
+
 //sign in and creat the session for the user
 module.exports.createSession = function(req,res){
-    //todo
+    return res.redirect('/');
 };
+
+module.exports.destroySession = function(req,res){
+    req.logout();
+    return res.redirect('/')
+}
