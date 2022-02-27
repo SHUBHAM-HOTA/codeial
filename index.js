@@ -15,6 +15,25 @@ const passportLocal = require('./config/passport-local-strategy');
 //mongoUrl:'mongodb://localhost:27017/codeial_development',
 const MongoStore = require('connect-mongo');
 
+//used for sass
+const sassMiddleware = require('node-sass-middleware');
+
+//we need to put some settings in sass
+app.use(sassMiddleware({
+    //sourse is the source where to pick up the scss files to convert into css
+    src:'./assets/scss',
+    //destination where do i need to put my css files
+    dest:'./assets/css',
+    //do you want to show if there is any error that is not converted 
+    //set it to false when running in the producntion mode
+    debug:true,
+    //we want in to be in multiple lines
+    outputStyle:'extended',
+    //we are using the middleware so where the server should look for the css files
+    prefix:'/css'
+}));
+
+
 app.use(express.urlencoded());
 
 //telling to use the cookie parser

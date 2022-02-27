@@ -1,4 +1,33 @@
 <header>
+    <div id="outer-div">
+        <div id="title-div">
+            <h1 id="main-title">codeial</h1>
+        </div>
+        <div id="div-sign-in-out">
+            <ul id="sign-in-out-profile">
+                <% if (locals.user){ %>
+                    <li>
+                        <a href="/users/profile">
+                            <%= user.name %></li>
+                        </a>
+                        
+                    <li>
+                        <a href="/users/sign-out">sign out</a>
+                    </li>
+                <% }else{ %>
+                    <li>
+                        <a href="/users/sign-in">sign in</a>
+                    </li>
+                    <li>
+                        <a href="/users/sign-up">sign up</a>
+                    </li>
+                <% } %>   
+            </ul>
+        </div>
+    </div>
+</header>
+
+<!-- <header>
     page header
     <ul>
         <% if (locals.user){ %>
@@ -19,4 +48,4 @@
             </li>
         <% } %>   
     </ul>
-</header>
+</header> -->
