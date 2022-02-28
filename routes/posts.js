@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+//we need passport to authenticate user
+const passport = require('passport')
+
 const postsController = require('../controllers/posts_controller');
 
-
-router.post('/create',postsController.create);
+// here we are checking the authentication so that the only persion that is signed in can post not others
+router.post('/create',passport.checkAuthentication,postsController.create);
 
 module.exports = router;
