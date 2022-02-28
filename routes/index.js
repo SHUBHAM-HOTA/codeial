@@ -1,5 +1,6 @@
 // importing express
 const express = require('express');
+const { use } = require('passport');
 
 // callling the router
 const router = express.Router();
@@ -13,6 +14,7 @@ console.log('router loaded and working fine')
 router.get('/',homeController.home)
 router.use('/users',require('./users'));
 router.use('/posts',require('./posts'));
+router.use('/comments',require('./comments'));
 // for any further routes, access from here
 // router.use('/routerName', require('./routerfile));
 
