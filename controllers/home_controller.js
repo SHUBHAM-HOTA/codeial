@@ -23,7 +23,7 @@ module.exports.home = function(req,res){
     })
     .exec(function(err,posts){
 
-        // these lines are for the users list in home page
+        // all_users is for the users list in home page as friends
         User.find({},function(err,users){
             return res.render('home', {
                 title: "Codeial | Home",

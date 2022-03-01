@@ -10,6 +10,8 @@ const usersController = require('../controllers/users_controller');
 
 //here passport.checkAuthentication is added so that the user can access the profile page only when logged in 
 router.get('/profile/:id',passport.checkAuthentication,usersController.profile);
+//here we are updating the profile page according to the user fills the form
+router.post('/update/:id',passport.checkAuthentication,usersController.update);
 
 router.get('/post',usersController.post);
 

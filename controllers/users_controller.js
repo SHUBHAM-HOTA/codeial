@@ -13,6 +13,16 @@ module.exports.profile = function(req,res){
     
 };
 
+module.exports.update = function(req,res){
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+            return res.redirect('back');
+        });
+    }else{
+        return res.status(401).send('Unauthorized');
+    }
+}
+
 module.exports.post = function(req,res){
     res.end('<h1>User posts</h1>')
 };
@@ -68,5 +78,5 @@ module.exports.createSession = function(req,res){
 
 module.exports.destroySession = function(req,res){
     req.logout();
-    return res.redirect('/')
-}
+    return res.redirect('/');
+};
