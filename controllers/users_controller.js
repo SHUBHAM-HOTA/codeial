@@ -2,7 +2,7 @@ const { redirect } = require("express/lib/response");
 const User = require("../models/user");
 
 
-
+//no need to add async await because there is only one callback function
 module.exports.profile = function(req,res){
     User.findById(req.params.id,function(err,user){
         return res.render('profile',{
@@ -71,12 +71,14 @@ module.exports.create = function(req,res){
 };
 
 
-//sign in and creat the session for the user
+//sign in and create the session for the user
 module.exports.createSession = function(req,res){
+    req.flash('success','Logged in Successfully');
     return res.redirect('/');
 };
 
 module.exports.destroySession = function(req,res){
+    req.flash('success','You have Logged out');
     req.logout();
     return res.redirect('/');
 };

@@ -18,6 +18,11 @@ const MongoStore = require('connect-mongo');
 //used for sass
 const sassMiddleware = require('node-sass-middleware');
 
+//used for flash massages
+const flash = require('connect-flash');
+
+const customMware = require('./config/middleware')
+
 //we need to put some settings in sass
 app.use(sassMiddleware({
     //sourse is the source where to pick up the scss files to convert into css
@@ -91,6 +96,10 @@ app.use(passport.session());
 //this will act as a middilewere 
 //so that the user is acceseble in the views
 app.use(passport.setAuthenticatedUser);
+
+//this is for the flash and we need to place this after the session because this uses session cookies
+app.use(flash());
+app.use(customMware.setFlash);
 
 //use express router
 app.use('/',require('./routes'))
