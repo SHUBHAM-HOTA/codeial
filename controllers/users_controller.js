@@ -13,19 +13,43 @@ module.exports.profile = function(req,res){
     
 };
 
-module.exports.update = function(req,res){
+//version 1
+// module.exports.update = function(req,res){
+//     if(req.user.id == req.params.id){
+//         User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+//             return res.redirect('back');
+//         });
+//     }else{
+//         req.flash('error','Unauthorized');    
+//         return res.status(401).send('Unauthorized');
+//     }
+// }
+
+// module.exports.post = function(req,res){
+//     res.end('<h1>User posts</h1>')
+// };
+
+//version 2 with async await because adding the file upload too
+module.exports.update = async function(req,res){
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvtar(req,res,function(err){
+                if(err){console.log('****multer err',err)}
+                console.log(req.file);
+            });
+        }catch(err){
+            req.flash('error',err);
             return res.redirect('back');
-        });
+    }
+        
     }else{
+        req.flash('error','Unauthorized');
         return res.status(401).send('Unauthorized');
     }
-}
-
-module.exports.post = function(req,res){
-    res.end('<h1>User posts</h1>')
+        
 };
+
 
 //render sign in page
 module.exports.signin = function(req,res){
