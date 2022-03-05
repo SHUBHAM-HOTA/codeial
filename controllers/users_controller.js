@@ -1,4 +1,4 @@
-const { redirect } = require("express/lib/response");
+//const { redirect } = require("express/lib/response");
 const User = require("../models/user");
 
 
@@ -36,7 +36,16 @@ module.exports.update = async function(req,res){
             let user = await User.findById(req.params.id);
             User.uploadedAvtar(req,res,function(err){
                 if(err){console.log('****multer err',err)}
-                console.log(req.file);
+                //console.log(req.file);
+                user.name = req.body.name;
+                user.email = req.body.email;
+                if(req.file){
+                    // this is saving the path of uploaded file
+                    //into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename
+                }
+                user.save();
+                return res.redirect('back');
             });
         }catch(err){
             req.flash('error',err);

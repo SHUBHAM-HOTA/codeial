@@ -1,12 +1,10 @@
 // importing express
 const express = require('express');
-const { use } = require('passport');
+//const { use } = require('passport');
 
 // callling the router
 const router = express.Router();
-const homeController = require('../controllers/home_controller')
-
-
+const homeController = require('../controllers/home_controller');
 
 console.log('router loaded and working fine')
 
@@ -20,4 +18,4 @@ router.use('/comments',require('./comments'));
 
 
 // exporting the router
-module.exports = router
+module.exports = router;
