@@ -1,6 +1,9 @@
 //const { redirect } = require("express/lib/response");
 const User = require("../models/user");
 
+//importing fs and path to delete the previous avatar image
+const fs = require('fs');
+const path = require('path');
 
 //no need to add async await because there is only one callback function
 module.exports.profile = function(req,res){
@@ -12,6 +15,11 @@ module.exports.profile = function(req,res){
     });
     
 };
+
+module.exports.post = function(req,res){
+    res.end('<h1>User posts</h1>')
+};
+
 
 //version 1
 // module.exports.update = function(req,res){
@@ -25,22 +33,25 @@ module.exports.profile = function(req,res){
 //     }
 // }
 
-// module.exports.post = function(req,res){
-//     res.end('<h1>User posts</h1>')
-// };
+
 
 //version 2 with async await because adding the file upload too
 module.exports.update = async function(req,res){
     if(req.user.id == req.params.id){
         try{
             let user = await User.findById(req.params.id);
-            User.uploadedAvtar(req,res,function(err){
+            User.uploadedAvatar(req,res,function(err){
                 if(err){console.log('****multer err',err)}
                 //console.log(req.file);
                 user.name = req.body.name;
                 user.email = req.body.email;
                 if(req.file){
-                    // this is saving the path of uploaded file
+                    //this function is deleting the old avatar file
+                    if(user.avatar){
+                     fs.unlinkSync(path.join(__dirname, '..' , user.avatar))   
+                    }
+
+                    //this is saving the path of uploaded file
                     //into the avatar field in the user
                     user.avatar = User.avatarPath + '/' + req.file.filename
                 }
@@ -50,7 +61,7 @@ module.exports.update = async function(req,res){
         }catch(err){
             req.flash('error',err);
             return res.redirect('back');
-    }
+        }
         
     }else{
         req.flash('error','Unauthorized');
