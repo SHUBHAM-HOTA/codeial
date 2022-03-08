@@ -10,6 +10,9 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
+
 // const MongoStore = require('connect-mongo')(session) this line is shown in the video but 
 //its for older version so we need to remove the session from here and add mongourl like below line
 //mongoUrl:'mongodb://localhost:27017/codeial_development',

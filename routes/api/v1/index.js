@@ -1,8 +1,7 @@
-// importing express
 const express = require('express');
 
-// callling the router
 const router = express.Router();
-router.use('/posts',require('./posts'));
 
+router.use('/posts',require('./posts'));
+router.use('/users',require('./users'));
 module.exports = router;
