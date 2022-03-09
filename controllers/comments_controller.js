@@ -1,6 +1,8 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
-const commentsMailer = require('../mailers/comments_mailer')
+const commentsMailer = require('../mailers/comments_mailer');
+const commentEmailWorker = require('../workers/comment_email_worker');
+const queue = require('../config/kue');
 
 // //version 1
 // module.exports.create = function(req,res){
@@ -43,7 +45,16 @@ module.exports.create = async function(req, res){
             //in the video the below line is present but the funciton execPopulate is removed from the library
             //comment = await comment.populate('user', 'name email').execPopulate();
             comment = await comment.populate('user', 'name email');
-            commentsMailer.newComment(comment);
+            // commented the below line because calling it from the comment_email_worker
+            //commentsMailer.newComment(comment);
+            // we need to write emails here (below line) because in comment_email_worker we passed emails
+            let job = queue.create('emails',comment).save(function(err){
+                if(err){
+                    console.log('error in creating a queue',err);
+                    return;
+                }
+                console.log('job created',job.id)
+            })
             if (req.xhr){
                 
     
