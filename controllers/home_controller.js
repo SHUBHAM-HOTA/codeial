@@ -14,11 +14,11 @@ const User = require('../models/user');
 //     });
 
 
-    //version 2
-    // putting above lines on comment because we want to fetch complete user info not just user id
-    //populate the user of each post
+//version 2
+// putting above lines on comment because we want to fetch complete user info not just user id
+//populate the user of each post
 
-    //putting these lines in comments because we want to use async await and make the code cleaner
+//putting these lines in comments because we want to use async await and make the code cleaner
 
 // module.exports.home = function(req,res){
 //     Post.find({})
@@ -49,6 +49,7 @@ const User = require('../models/user');
 module.exports.home = async function(req,res){
     try{
         // populate the user of each post
+        // CHANGE for likes :: populate the likes of each post and comment
         let posts = await Post.find({})
         .sort('-createdAt')
         .populate('user')
@@ -56,8 +57,11 @@ module.exports.home = async function(req,res){
             path:'comments',
             populate:{
                 path:'user'
+            },
+            populate: {
+                path: 'likes'
             }
-        });
+        }).populate('likes');
 
         let users = await User.find({});
 

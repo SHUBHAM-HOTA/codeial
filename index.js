@@ -26,6 +26,14 @@ const flash = require('connect-flash');
 
 const customMware = require('./config/middleware')
 
+//setting up the chat server to be used with socket.io 
+//we will pass this chat server(the below one) to the chat soket file
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chat server is runnning on port: 5000')
+
+
 //we need to put some settings in sass
 app.use(sassMiddleware({
     //sourse is the source where to pick up the scss files to convert into css
