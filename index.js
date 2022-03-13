@@ -33,6 +33,10 @@ const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chat server is runnning on port: 5000')
 
+//for resolving has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource
+//also added app.use line and one line in chat_socket to resolve the issue
+const cors = require('cors');
+
 
 //we need to put some settings in sass
 app.use(sassMiddleware({
@@ -54,7 +58,7 @@ app.use(express.urlencoded());
 
 //telling to use the cookie parser
 app.use(cookieParser());
-
+app.use(cors());
 app.use(express.static('./assets'));
 
 //make the uploads path available to the browser
