@@ -39,24 +39,27 @@ console.log('chat server is runnning on port: 5000')
 const cors = require('cors');
 
 //to set path for environment 
-const path = require(path);
+const path = require('path');
 
 //we need to put some settings in sass
-app.use(sassMiddleware({
-    //sourse is the source where to pick up the scss files to convert into css
-    //src:'./assets/scss',
-    src: path.join(__dirname, env.asset_path, 'scss'),
-    //destination where do i need to put my css files
-    //dest:'./assets/css',
-    dest: path.join(__dirname, env.asset_path, 'css'),
-    //do you want to show if there is any error that is not converted 
-    //set it to false when running in the producntion mode
-    debug:true,
-    //we want in to be in multiple lines
-    outputStyle:'extended',
-    //we are using the middleware so where the server should look for the css files
-    prefix:'/css'
-}));
+if(env.name == 'development'){
+    app.use(sassMiddleware({
+        //sourse is the source where to pick up the scss files to convert into css
+        //src:'./assets/scss',
+        src: path.join(__dirname, env.asset_path, 'scss'),
+        //destination where do i need to put my css files
+        //dest:'./assets/css',
+        dest: path.join(__dirname, env.asset_path, 'css'),
+        //do you want to show if there is any error that is not converted 
+        //set it to false when running in the producntion mode
+        debug:true,
+        //we want in to be in multiple lines
+        outputStyle:'extended',
+        //we are using the middleware so where the server should look for the css files
+        prefix:'/css'
+    }));
+}
+
 
 
 app.use(express.urlencoded());
