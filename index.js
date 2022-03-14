@@ -1,4 +1,5 @@
 const express = require('express');
+const env = require('./config/environment');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
@@ -37,13 +38,17 @@ console.log('chat server is runnning on port: 5000')
 //also added app.use line and one line in chat_socket to resolve the issue
 const cors = require('cors');
 
+//to set path for environment 
+const path = require(path);
 
 //we need to put some settings in sass
 app.use(sassMiddleware({
     //sourse is the source where to pick up the scss files to convert into css
-    src:'./assets/scss',
+    //src:'./assets/scss',
+    src: path.join(__dirname, env.asset_path, 'scss'),
     //destination where do i need to put my css files
-    dest:'./assets/css',
+    //dest:'./assets/css',
+    dest: path.join(__dirname, env.asset_path, 'css'),
     //do you want to show if there is any error that is not converted 
     //set it to false when running in the producntion mode
     debug:true,
@@ -59,7 +64,7 @@ app.use(express.urlencoded());
 //telling to use the cookie parser
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 
 //make the uploads path available to the browser
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -83,7 +88,7 @@ app.set('views','./views');
 app.use(session({
     name:'codeial',
     // TODO change the secret before deployment in production mode
-    secret:'something_anything',
+    secret: env.session_cookie_key,
     //saveUninitialized is false becuase when the user in not logged in then we dont want
     //to save the extra data on the session cookie.
     saveUninitialized: false,

@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/codeial_development');
+//to set up the environment
+const env = require('./environment');
 
+//mongoose.connect('mongodb://localhost/codeial_development');
+mongoose.connect(`mongodb://localhost/${env.db}`);
 const db = mongoose.connection;
 
 db.on('error',console.error.bind(console,"Error connecting to mongodb"));
